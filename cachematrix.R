@@ -12,8 +12,11 @@
 makeCacheMatrix <- function(x = matrix()) {
     m <- NULL
     set <- function(y) {
-        x <<- y
-        m <<- NULL
+        old_value <- get()
+        if (!identical(old_value,y)) {
+            x <<- y
+            m <<- NULL
+        }
     }
     get <- function() x
     setinverse <- function(inverse) m <<- inverse
@@ -25,9 +28,6 @@ makeCacheMatrix <- function(x = matrix()) {
 
 ## Return if there is existing cache.
 ## Otherwise, inverse the supplied matrix, cache and return it.
-## There is no need to explicitly check if matrix has been changed because
-## everytime when matrix change through its set function, cache will reset to 
-## NULL which in turn caused the re-compute of inverse. 
 cacheSolve <- function(x, ...) {
     ## Return a matrix that is the inverse of 'x'
     m <- x$getinverse()
