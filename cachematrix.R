@@ -13,8 +13,8 @@ makeCacheMatrix <- function(x = matrix()) {
     m <- NULL
     set <- function(y) {
         old_value <- get()
-        if (!identical(old_value,y)) {
-            x <<- y
+        x <<- y
+        if (!identical(old_value,x)) {
             m <<- NULL
         }
     }
